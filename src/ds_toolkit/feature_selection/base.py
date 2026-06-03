@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class BaseReport(ABC):
+class BaseFeatureSelection(ABC):
 
     def __init__(self):
         pass
@@ -10,3 +10,9 @@ class BaseReport(ABC):
     @abstractmethod
     def report(self):
         pass
+
+    @staticmethod
+    @abstractmethod
+    def visualization(self):
+        pass
+

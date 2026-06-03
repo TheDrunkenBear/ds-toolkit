@@ -62,7 +62,7 @@ class DSToolkit:
     @property
     def features(self) -> List[str]:
 
-        excluded_columns = self.target_columns
+        excluded_columns = list(self.target_columns)
 
         if self.id_column is not None:
             excluded_columns.append(self.id_column)

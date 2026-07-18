@@ -1,6 +1,26 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "ds-toolkit"
 version = "0.0.1"
+description = "A personal suite of tools for data analytics, scoring modeling, and model validation."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Александр", email = "tabbols95@gmail.com" }]
+dependencies = [
+    "pandas>=2.0",
+    "scikit-learn>=1.3",
+    "statsmodels>=0.14",
+    "matplotlib>=3.7",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.6",
+]
 
 [tool.setuptools]
 package-dir = {"" = "src"}

@@ -4,7 +4,7 @@ from matplotlib.axes import Axes
 from statsmodels.stats.outliers_influence import variance_inflation_factor
 
 from ds_toolkit.data import Dataset
-from ds_toolkit.feature_selection import BaseFeatureSelection
+from ds_toolkit.feature_selection.base import BaseFeatureSelection
 
 
 class VarianceInflationFactor(BaseFeatureSelection):

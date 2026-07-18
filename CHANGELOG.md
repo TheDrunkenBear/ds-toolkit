@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+- `VarianceInflationFactor.report` now computes VIF on a design matrix with an
+  intercept (`add_constant`); previously the missing constant distorted the
+  values. It also warns when non-numeric features are skipped or rows with
+  missing values are dropped.
+
+### Fixed
+- `VarianceInflationFactor.report` drops rows containing missing values before
+  computing VIF instead of producing `NaN`/errors, and raises a clear error
+  when no complete rows remain.
+
 ## [0.1.0] - 2026-07-19
 
 ### Added

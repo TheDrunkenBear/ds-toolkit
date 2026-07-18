@@ -37,13 +37,18 @@ def split_train_test_oot(
             config=dataset.config,
         )
 
+    if stratify is not None and stratify not in sample.columns:
+        raise ValueError(f"stratify column '{stratify}' not found")
+
+    stratify_values = sample[stratify] if stratify is not None else None
+
     train, test = train_test_split(
         sample,
         test_size=test_size,
         train_size=train_size,
         random_state=random_state,
         shuffle=shuffle,
-        stratify=stratify
+        stratify=stratify_values,
     )
 
     return (

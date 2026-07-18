@@ -1,18 +1,20 @@
 from abc import ABC, abstractmethod
 
+import pandas as pd
+from matplotlib.axes import Axes
+
+from ds_toolkit.data import Dataset
+
 
 class BaseFeatureSelection(ABC):
+    """Common interface for feature-selection diagnostics."""
 
-    def __init__(self):
-        pass
-
-    @staticmethod
+    @classmethod
     @abstractmethod
-    def report(self):
-        pass
+    def report(cls, dataset: Dataset) -> pd.DataFrame:
+        """Return a per-feature diagnostic report."""
 
-    @staticmethod
+    @classmethod
     @abstractmethod
-    def visualization(self):
-        pass
-
+    def visualization(cls, dataset: Dataset) -> Axes:
+        """Render the diagnostic as a matplotlib Axes."""

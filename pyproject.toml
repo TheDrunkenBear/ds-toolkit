@@ -4,10 +4,11 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ds-toolkit"
-version = "0.0.1"
+dynamic = ["version"]
 description = "A personal suite of tools for data analytics, scoring modeling, and model validation."
 readme = "README.md"
 requires-python = ">=3.10"
+license = { text = "MIT" }
 authors = [{ name = "Александр", email = "tabbols95@gmail.com" }]
 dependencies = [
     "pandas>=2.0",
@@ -22,8 +23,25 @@ dev = [
     "ruff>=0.6",
 ]
 
+[project.urls]
+Homepage = "https://github.com/TheDrunkenBear/ds-toolkit"
+Changelog = "https://github.com/TheDrunkenBear/ds-toolkit/blob/master/CHANGELOG.md"
+
 [tool.setuptools]
-package-dir = {"" = "src"}
+package-dir = { "" = "src" }
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.dynamic]
+version = { attr = "ds_toolkit.__version__" }
+
+[tool.ruff]
+line-length = 88
+src = ["src", "tests"]
+extend-exclude = ["notebooks"]
+
+[tool.ruff.lint]
+# Ruff's default rule set (pyflakes + a curated pycodestyle subset).
+# Stricter rules (I, W, UP, B) are enabled in a later change.
+select = ["E4", "E7", "E9", "F"]

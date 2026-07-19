@@ -1,14 +1,14 @@
 from dataclasses import dataclass, field
-from typing import List
+
 import pandas as pd
 
 
 @dataclass
 class DatasetConfig:
-    target_columns: List[str]
+    target_columns: list[str]
     id_column: str | None = None
     date_column: str | None = None
-    exclude_columns: List[str] = field(default_factory=list)
+    exclude_columns: list[str] = field(default_factory=list)
 
 
 class Dataset:
@@ -32,54 +32,43 @@ class Dataset:
 
     def _validate_input(self) -> None:
         """Validate the input data."""
-        if (
-            self.id_column is not None
-            and self.id_column not in self.sample.columns
-        ):
+        if not self.target_columns:
+            raise ValueError("target_columns must not be empty")
+
+        columns = set(self.sample.columns)
+        available = list(self.sample.columns)
+
+        if self.id_column is not None and self.id_column not in columns:
             raise ValueError(
-                f"id_column='{self.id_column}' not found"
+                f"id_column='{self.id_column}' not found. "
+                f"Available columns: {available}"
             )
 
-        if (
-            self.date_column is not None
-            and self.date_column not in self.sample.columns
-        ):
+        if self.date_column is not None and self.date_column not in columns:
             raise ValueError(
-                f"date_column='{self.date_column}' not found"
+                f"date_column='{self.date_column}' not found. "
+                f"Available columns: {available}"
             )
 
         missing_target_columns = [
-            col
-            for col in self.target_columns
-            if col not in self.sample.columns
+            col for col in self.target_columns if col not in columns
         ]
-
         if missing_target_columns:
             raise ValueError(
-                f"target_columns not found: {missing_target_columns}"
-            )
-
-        if not self.target_columns:
-            raise ValueError(
-                "target_columns must not be empty"
+                f"target_columns not found: {missing_target_columns}. "
+                f"Available columns: {available}"
             )
 
     @property
-    def features(self) -> List[str]:
-
-        excluded_columns = list(self.target_columns)
+    def features(self) -> list[str]:
+        excluded_columns = set(self.target_columns) | set(self.exclude_columns)
 
         if self.id_column is not None:
-            excluded_columns.append(self.id_column)
+            excluded_columns.add(self.id_column)
 
         if self.date_column is not None:
-            excluded_columns.append(self.date_column)
-
-        if self.exclude_columns is not None:
-            excluded_columns.extend(self.exclude_columns)
+            excluded_columns.add(self.date_column)
 
         return [
-            col
-            for col in self.sample.columns
-            if col not in excluded_columns
+            col for col in self.sample.columns if col not in excluded_columns
         ]

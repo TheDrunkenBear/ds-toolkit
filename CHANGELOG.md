@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   intercept (`add_constant`); previously the missing constant distorted the
   values. It also warns when non-numeric features are skipped or rows with
   missing values are dropped.
+- `Dataset` validates that `target_columns` is non-empty before the other
+  checks, includes the available columns in "not found" errors, resolves
+  features via set membership, and uses built-in generic type hints
+  (`list[...]`).
 
 ### Fixed
 - `VarianceInflationFactor.report` drops rows containing missing values before
